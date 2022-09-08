@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from pickle import TRUE
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'debug_toolbar',
+    # 'celery',
 ]
 
 MIDDLEWARE = [
@@ -144,7 +146,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.history.HistoryPanel',
@@ -163,6 +164,7 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.profiling.ProfilingPanel',
 ] 
 
+# FOR DJANGO DEBUG TOOLBAR
 if DEBUG:
     import mimetypes
     mimetypes.add_type("application/javascript", ".js", True)
@@ -170,3 +172,21 @@ if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
         'INTERCEPT_REDIRECTS': False,
     }
+
+# CELERY CONFIG
+CELERY_TIMEZONE = "Asia/Kolkata"
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER ='json'
+
+# for sending mails
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # For sending mail to console
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = TRUE
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'piyushdevcode@gmail.com'
+EMAIL_HOST_PASSWORD ='zriubuugkembydin'
+DEFAULT_FROM_EMAIL = 'Celery<piyushdevcode@gmail.com>'

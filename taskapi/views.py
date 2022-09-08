@@ -11,7 +11,7 @@ from rest_framework.reverse import reverse
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from django.core.mail import send_mail
-
+from core.tasks import send_mail_to_leader
 
 @api_view()
 def root_API(request):
@@ -37,20 +37,18 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.TaskSerializer
 
     #/ TRANSFER  send mail TO perform create
-    def create(self, request, *args, **kwargs):
-        print('task request data')
-        print(request.data)
-        # request.data['team_member'] = []
-        send_mail(
-            'Subject here',
-            'Here is the message.',
-            'from@example.com',
-            ['to@example.com'],
-            fail_silently=False,
-        )
-        return super().create(request, *args, **kwargs)
-        return Response({})
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    def perform_create(self, serializer):
+            ## ADD THE SEND MAIL HERE
+        task_name = serializer.validated_data["name"]
+        leader_email = serializer.validated_data["team"].team_leader.email
+        print(f'Alloted to Team: {leader_email} | {task_name}')
+        send_mail_to_leader.delay(from_mail='noreply@tasks.com',
+                                  subject ='New Task Assigned',
+                                  to_mail=['teamleadermail'],
+                                  message=['hello new task alloted','taskname'],
+                                  onsuccess='Task Creation mail sent successfully',)
+        raise Exception
+        return super().perform_create(serializer)
 
     
     # Only Team Leader can update all the fields of Task using PUT method
@@ -89,7 +87,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class TeamViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         """
-        give create permission to USER Role only
+        give create permission to USER and ADMIN Role only
         """
         if self.action == 'create':
             permission_classes = [IsUser | permissions.IsAdminUser]
