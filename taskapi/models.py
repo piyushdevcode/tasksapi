@@ -34,7 +34,8 @@ class User(AbstractUser):
 
 class Team(models.Model):
     name = models.CharField(max_length=100,blank=False)
-    # using limit choice to show only the team leaders 
+
+    # using limit choice to show only the team leaders in the select input
     team_leader = models.ForeignKey(User,related_name='team_l',on_delete=models.CASCADE,limit_choices_to={'role':User.TEAM_LEADER})
     team_members = models.ManyToManyField(User,related_name='team_m',
     limit_choices_to={'role':User.TEAM_MEMBER},blank=True)
@@ -57,7 +58,7 @@ class Task(models.Model):
     team = models.ForeignKey(Team,related_name='task_t',on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=100,blank=False)
     status = models.CharField(choices=STATUS_CHOICES,default=ASSIGNED,max_length=20)
-    #we will auto populate team members
+    #Will auto populate team members when saving a new Instance so setting blank
     team_members = models.ManyToManyField(User,related_name='task',blank=True)
     started_at = models.DateField(auto_now_add=True)
     completed_at = models.DateField(blank=True,null=True)

@@ -12,7 +12,8 @@ class IsMemberOfTask(permissions.BasePermission):
             return False
         if(obj.team.team_leader == request.user):
             return True
-        for member in obj.team_members.all():
+        team_members = obj.team_members.all()
+        for member in team_members:
             if(member == request.user): 
                 return True
 

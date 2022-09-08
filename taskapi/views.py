@@ -15,6 +15,9 @@ from core.tasks import send_mail_to_leader
 
 @api_view()
 def root_API(request):
+    """
+    Root API for Task-api
+    """
     return Response({
         'users': reverse('user-list',request=request),
         'teams': reverse('team-list',request=request),
@@ -25,7 +28,7 @@ def root_API(request):
 class TaskViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         """
-        give create permission to USER Role only
+        give create permission to USER Role only else only Members of Task can access
         """
         if self.action == 'create':
             permission_classes = [IsUser | permissions.IsAdminUser]
@@ -35,27 +38,30 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     queryset = Task.objects.all()
     serializer_class = serializers.TaskSerializer
-
+    
     #/ TRANSFER  send mail TO perform create
     def perform_create(self, serializer):
-            ## ADD THE SEND MAIL HERE
+        """
+        when new task is created send mail to their corresponding leader
+        """
         task_name = serializer.validated_data["name"]
-        leader_email = serializer.validated_data["team"].team_leader.email
-        print(f'Alloted to Team: {leader_email} | {task_name}')
-        send_mail_to_leader.delay(from_mail='noreply@tasks.com',
-                                  subject ='New Task Assigned',
-                                  to_mail=['teamleadermail'],
-                                  message=['hello new task alloted','taskname'],
-                                  onsuccess='Task Creation mail sent successfully',)
+        leader    = serializer.validated_data["team"].team_leader
+        message   = f'Hello {leader.username} New Task {task_name} assigned to your team'
+        subject   = f'New Task {task_name} Assigned'
+        print(f'Alloted to Team: {leader.email} | {task_name}')
+        send_mail_to_leader.delay(subject =subject,
+                                  to_email=leader.email,
+                                  message=message,
+                                  onsuccess='Task Creation mail sent successfully')
         raise Exception
-        return super().perform_create(serializer)
-
+        serializer.save()
     
     # Only Team Leader can update all the fields of Task using PUT method
     def update(self,request,*args,**kwargs):
         print(f'Self is: {self} \nRequest: {request.data} length: ({ len(request.data)}) \nargs: {args} \n kwargs: {kwargs}')
         partial = kwargs.pop('partial',False)
 
+        # if PATCH Request or user is team leader
         if partial or request.user.is_team_leader:
             instance = self.get_object()
             print(f'Instance Team ID: {instance.team.id}')
@@ -66,23 +72,20 @@ class TaskViewSet(viewsets.ModelViewSet):
         
         return Response({'error':'Team Members can only modify the Status field using PATCH method'})
         
-    # Team members can only update the status field
+    # Team members can only update the status field using PATCH
     def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True
-        if request.user.is_team_leader or (len(request.data)==1 and "status" in request.data):
+        only_editing_status = bool((len(request.data)==1 and "status" in request.data))
+        if request.user.is_team_leader or only_editing_status:
             return super().partial_update(request, *args, **kwargs)
     
         return Response({'error':'Team Members can only modify the status field'})
         
 
-
-
-
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
     permission_classes = [permissions.IsAdminUser]
-
 
 class TeamViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
@@ -94,19 +97,6 @@ class TeamViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [permissions.IsAuthenticated]
         return [permission() for permission in permission_classes]
-
-    def list(self, request, *args, **kwargs):
-        queryset = Team.objects.all()
-        serializer = serializers.TeamSerializer(queryset, many=True)
-        print(f'Team List: {request} \n hooo \n {request.data}')
-        return Response(serializer.data)
-    
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
     queryset = Team.objects.all()

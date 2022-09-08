@@ -21,6 +21,7 @@ admin.site.site_header = "Frejun Task API"
 admin.site.site_title = "Frejun Task API Admin"
 admin.site.index_title = "Frejun Task API Admin Panel"
 urlpatterns = [
+    # for using debug toolbar
     path('__debug__/',include(debug_toolbar.urls)),
     path('admin/', admin.site.urls),
     path('api/',include('taskapi.urls')),

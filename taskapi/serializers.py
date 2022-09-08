@@ -5,7 +5,6 @@ from taskapi.models import *
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     task = serializers.HyperlinkedRelatedField(view_name='task-detail',many=True,read_only=True)
-    # tasks = serializers.PrimaryKeyRelatedField(read_only=True)
 
     # to enable hidden input in password form of browsable API and hide it in Response
     password = serializers.CharField(style={'input_type': 'password'},write_only=True)
@@ -24,9 +23,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TeamSerializer(serializers.ModelSerializer):
-    # team_leader = serializers.StringRelatedField()
-    # team_members = serializers.StringRelatedField(many=True)
-    # leader_url = serializers.HyperlinkedRelatedField(view_name='user-detail',read_only=True)
 
     ## Custom Serializer We can now specify the fields to serialize
     def __init__(self, *args, **kwargs):

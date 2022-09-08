@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from pickle import TRUE
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,7 @@ SECRET_KEY = 'django-insecure-0zr9kma_8#9l_3%a%s3frrdx)wbiek#dz5r5n$23$g8h##vslu
 DEBUG = True
 
 # for allowing access to all devices on network
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['']
 
 
 # Application definition
@@ -166,6 +167,8 @@ DEBUG_TOOLBAR_PANELS = [
 
 # FOR DJANGO DEBUG TOOLBAR
 if DEBUG:
+    # for allowing access to all devices on network
+    ALLOWED_HOSTS = ['*']
     import mimetypes
     mimetypes.add_type("application/javascript", ".js", True)
 
@@ -188,5 +191,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = TRUE
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'piyushdevcode@gmail.com'
-EMAIL_HOST_PASSWORD ='zriubuugkembydin'
+EMAIL_HOST_PASSWORD =os.environ.get('g_app_pwd')
 DEFAULT_FROM_EMAIL = 'Celery<piyushdevcode@gmail.com>'

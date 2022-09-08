@@ -2,21 +2,20 @@ from django.contrib import admin
 from taskapi.models import *
 
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .forms import CustomUserCreationForm
 
-
-from django.contrib.contenttypes.admin import GenericTabularInline
-
+# for customizing the admin interface of UserAdmin
 class UserAdmin(BaseUserAdmin):
-    add_form = CustomUserCreationForm
 
     list_display = ('email', 'username','role')
     list_filter = ('role',)
+    
+    # when exisiting user is edited
     fieldsets = (
         (None, {'fields': ('username','email', 'password')}),
         ('Permissions', {'fields': ('role',)}),
     )
 
+    # when new user is created
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -38,6 +37,7 @@ class TaskAdmin(admin.ModelAdmin):
     list_display = ('name','team','started_at','status','completed_at')
     list_filter = ('status','team')
     
+    #/ FOR TESTING -------------
     def save_model(self, request, obj, form, change):
         print('Saving the Task from Admin Panel: ', obj)
         print('Team is:  ', obj.team)
@@ -46,7 +46,7 @@ class TaskAdmin(admin.ModelAdmin):
         # obj.save()
         super().save_model(request,obj,form,change)
 
-    # changing which fields are displyed on add or change form 
+    # dynamically changing which fields are displyed on add or change form 
     def get_fields(self, request, obj):
         if obj :
             fields = ('name','team','status','completed_at')
@@ -57,6 +57,8 @@ class TaskAdmin(admin.ModelAdmin):
 
 class TeamAdmin(admin.ModelAdmin):
     inlines = [TaskInline,]
+
+    # for manytomany field interface
     filter_horizontal = ('team_members',)
 
 
