@@ -46,9 +46,9 @@ class TaskViewSet(viewsets.ModelViewSet):
         """
         task_name = serializer.validated_data["name"]
         leader    = serializer.validated_data["team"].team_leader
-        message   = f'Hello {leader.username} New Task {task_name} assigned to your team'
+        message   = f'Hello {leader.username},\n\nNew Task "{task_name}" is assigned to your team'
         subject   = f'New Task {task_name} Assigned'
-        print(f'Alloted to Team: {leader.email} | {task_name}')
+
         send_mail_to_leader.delay(subject =subject,
                                   to_email=leader.email,
                                   message=message,
