@@ -24,21 +24,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class TeamSerializer(serializers.ModelSerializer):
 
-    ## Custom Serializer We can now specify the fields to serialize
-    def __init__(self, *args, **kwargs):
-        # Don't pass the 'fields' arg up to the superclass
-        fields = kwargs.pop('fields', None)
-
-        # Instantiate the superclass normally
-        super().__init__(*args, **kwargs)
-
-        if fields is not None:
-            # Drop any fields that are not specified in the `fields` argument.
-            allowed = set(fields)
-            existing = set(self.fields)
-            for field_name in existing - allowed:
-                self.fields.pop(field_name)
-
     def validate_team_leader(self,value):
         """
         To validate a Team Leader
@@ -52,16 +37,12 @@ class TeamSerializer(serializers.ModelSerializer):
             raise ValidationError('Team Leader doesn\'t exist ')
         return value
 
-       
     def validate_team_members(self,value):
-        print('Validating Team Members...')
-        print(value)
         team_members = value
 
         for _member in team_members:
             try:
                 member = User.objects.get(pk=_member.id)
-                print("Member is: ",member)
                 if not member.is_team_member:
                     raise ValidationError('Member must have `Role` of Team Member ')
             except User.DoesNotExist:
@@ -70,7 +51,6 @@ class TeamSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Team
-        # fields = ['url','team_leader','leader_url','team_members']
         fields = '__all__'
     
 class TaskSerializer(serializers.ModelSerializer):

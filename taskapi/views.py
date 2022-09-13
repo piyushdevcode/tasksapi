@@ -1,8 +1,7 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.viewsets import generics
 from rest_framework.viewsets import mixins
-from rest_framework.decorators import permission_classes, api_view
+from rest_framework.decorators import api_view
 
 from taskapi.models import *
 from taskapi import serializers
@@ -10,7 +9,6 @@ from taskapi.permissions import *
 from rest_framework.reverse import reverse
 from rest_framework import permissions, status
 from rest_framework.response import Response
-from django.core.mail import send_mail
 from core.tasks import send_mail_to_leader
 
 @api_view()
@@ -28,9 +26,9 @@ def root_API(request):
 class TaskViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         """
-        give create permission to USER Role only else only Members of Task can access
+        give create permission to USER Role only & only Members of Task can retrieve 
         """
-        if self.action == 'create':
+        if self.action == 'create' or self.action == 'list' :
             permission_classes = [IsUser | permissions.IsAdminUser]
         else:
             permission_classes = [IsMemberOfTask]
@@ -56,19 +54,17 @@ class TaskViewSet(viewsets.ModelViewSet):
     
     # Only Team Leader can update all the fields of Task using PUT method
     def update(self,request,*args,**kwargs):
-        print(f'Self is: {self} \nRequest: {request.data} length: ({ len(request.data)}) \nargs: {args} \n kwargs: {kwargs}')
         partial = kwargs.pop('partial',False)
 
         # if PATCH Request or user is team leader
         if partial or request.user.is_team_leader:
             instance = self.get_object()
-            print(f'Instance Team ID: {instance.team.id}')
             serializer = self.get_serializer(instance,data=request.data,partial=partial)
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)
             return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
         
-        return Response({'error':'Team Members can only modify the Status field using PATCH method'})
+        return Response({'error':'Team Members can only modify the Status field using PATCH method'},status.HTTP_405_METHOD_NOT_ALLOWED)
         
     # Team members can only update the status field using PATCH
     def partial_update(self, request, *args, **kwargs):
@@ -77,7 +73,7 @@ class TaskViewSet(viewsets.ModelViewSet):
         if request.user.is_team_leader or only_editing_status:
             return super().partial_update(request, *args, **kwargs)
     
-        return Response({'error':'Team Members can only modify the status field'})
+        return Response({'error':'Team Members can only modify the status field'},status.HTTP_403_FORBIDDEN)
         
 
 class UserViewSet(viewsets.ModelViewSet):
