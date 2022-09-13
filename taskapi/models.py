@@ -15,7 +15,7 @@ class User(AbstractUser):
         (TEAM_MEMBER, 'Team Member')
     )
 
-    role = models.CharField(choices=ROLE_CHOICES,
+    role  = models.CharField(choices=ROLE_CHOICES,
                             default=TEAM_MEMBER,
                              max_length=20)
 
@@ -61,26 +61,24 @@ class Task(models.Model):
         (UNDER_REVIEW, 'Under Review'),
         (DONE, 'DONE')
     )
-    team = models.ForeignKey(Team, related_name='task_t',
+    team   = models.ForeignKey(Team, related_name='task_t',
                              on_delete=models.DO_NOTHING)
-    name = models.CharField(max_length=100, blank=False)
+    name   = models.CharField(max_length=100, blank=False)
     status = models.CharField(choices=STATUS_CHOICES,
                               default=ASSIGNED, max_length=20)
+
     # Will auto populate team members when saving a new Instance so setting blank
     team_members = models.ManyToManyField(
         User, related_name='task', blank=True)
     started_at = models.DateField(auto_now_add=True)
     completed_at = models.DateField(blank=True, null=True)
 
+    # adding the members of selected team
     def save(self, *args, **kwargs):
         instance = super().save(*args, **kwargs)
-        print('Printing Instance of Task---')
-        print("instance: ", instance, "\nself: ", self)
         team = Team.objects.get(pk=self.team.id)
-        print("Team: ", team)
         members = team.team_members.all()
         for member in members:
-            print("Member: ", member, "\n")
             self.team_members.add(member)
         return self
 

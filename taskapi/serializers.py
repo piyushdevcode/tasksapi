@@ -38,6 +38,9 @@ class TeamSerializer(serializers.ModelSerializer):
         return value
 
     def validate_team_members(self,value):
+        """
+        To validate a Team Member
+        """
         team_members = value
 
         for _member in team_members:
@@ -54,8 +57,6 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
 class TaskSerializer(serializers.ModelSerializer):
-    # team = serializers.HyperlinkedRelatedField(view_name='team-detail',read_only=True)
-    # team = TeamSerializer(read_only=True)
 
     class Meta:
         model = Task

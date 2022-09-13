@@ -3,6 +3,9 @@ from taskapi.models import *
 
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
+# setting view site url to our api root
+admin.site.site_url = '/api/'
+
 # for customizing the admin interface of UserAdmin
 class UserAdmin(BaseUserAdmin):
 

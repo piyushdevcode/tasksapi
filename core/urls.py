@@ -18,7 +18,7 @@ from django.urls import path,include
 import debug_toolbar
 
 admin.site.site_header = " Task API"
-admin.site.site_title = " Task API Admin"
+admin.site.site_title  = " Task API Admin"
 admin.site.index_title = " Task API Admin Panel"
 urlpatterns = [
     # for using debug toolbar

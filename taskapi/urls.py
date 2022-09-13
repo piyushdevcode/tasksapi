@@ -1,16 +1,8 @@
 from django.urls import path,include
 from taskapi import views
-from rest_framework import routers
-from rest_framework.authtoken import views as restviews
+from rest_framework.authtoken import views as drfviews
 
-
-# router = routers.DefaultRouter()
-
-# router.register(r'tasks',views.TaskViewSet)
-
-# router.register(r'users',views.UserViewSet)
-
-# router.register(r'teams',views.TeamViewSet)
+# creating binding of methods to actions
 
 user_detail = views.UserViewSet.as_view(
     {
@@ -50,11 +42,8 @@ urlpatterns = [
     path('tasks/<int:pk>/',task_detail,name='task-detail'),
     
 ]
-# urlpatterns += [
-#     path('',include(router.urls))
-# ]
 urlpatterns += [
     path('',views.root_API,name='api-root'),
-    path('auth-token/', restviews.obtain_auth_token),
+    path('auth-token/', drfviews.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
