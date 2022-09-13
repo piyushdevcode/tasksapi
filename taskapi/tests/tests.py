@@ -1,6 +1,4 @@
-from http.client import responses
-from urllib import response
-from rest_framework.test import APITestCase, force_authenticate
+from rest_framework.test import force_authenticate
 from rest_framework import status
 from django.urls import reverse
 from taskapi.models import *

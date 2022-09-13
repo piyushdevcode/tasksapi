@@ -5,7 +5,7 @@ from taskapi.models import *
 # Create your tests here.
 
 class TestSetUp(APITestCase):
-    fixtures = ['fixtures.json']
+    fixtures = ['test_data.json']
     def setUp(self):
         self.admin = User.objects.get(username='admin')
         self.user1 = User.objects.get(username='user1')
