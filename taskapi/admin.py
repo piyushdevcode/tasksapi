@@ -6,7 +6,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 # for customizing the admin interface of UserAdmin
 class UserAdmin(BaseUserAdmin):
 
-    list_display = ('email', 'username','role')
+    list_display = ('username', 'email','role')
     list_filter = ('role',)
     
     # when exisiting user is edited
@@ -57,6 +57,7 @@ class TaskAdmin(admin.ModelAdmin):
 
 class TeamAdmin(admin.ModelAdmin):
     inlines = [TaskInline,]
+    list_display = ('name','team_leader')
 
     # for manytomany field interface
     filter_horizontal = ('team_members',)

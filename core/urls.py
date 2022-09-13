@@ -17,9 +17,9 @@ from django.contrib import admin
 from django.urls import path,include
 import debug_toolbar
 
-admin.site.site_header = "Frejun Task API"
-admin.site.site_title = "Frejun Task API Admin"
-admin.site.index_title = "Frejun Task API Admin Panel"
+admin.site.site_header = " Task API"
+admin.site.site_title = " Task API Admin"
+admin.site.index_title = " Task API Admin Panel"
 urlpatterns = [
     # for using debug toolbar
     path('__debug__/',include(debug_toolbar.urls)),

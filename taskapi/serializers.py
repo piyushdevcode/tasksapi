@@ -44,8 +44,6 @@ class TeamSerializer(serializers.ModelSerializer):
         To validate a Team Leader
         """
         leader_id = value.id
-        print('printing lead_value: ',value)
-        print('printing lead_id: ',leader_id)
         try:
             leader = User.objects.get(pk=leader_id)
             if  not leader.is_team_leader:
@@ -55,20 +53,20 @@ class TeamSerializer(serializers.ModelSerializer):
         return value
 
        
-    # def validate_team_members(self,value):
-    #     print('Validating Team Members...')
-    #     print(value)
-    #     team_members = value
+    def validate_team_members(self,value):
+        print('Validating Team Members...')
+        print(value)
+        team_members = value
 
-    #     for _member in team_members:
-    #         try:
-    #             member = User.objects.get(pk=_member.id)
-    #             print("Member is: ",member)
-    #             if  member.is_team_member:
-    #                 raise ValidationError('Member must have `Role` of Team Member ')
-    #         except User.DoesNotExist:
-    #             raise ValidationError('Member doesn\'t exist')
-    #     return value
+        for _member in team_members:
+            try:
+                member = User.objects.get(pk=_member.id)
+                print("Member is: ",member)
+                if not member.is_team_member:
+                    raise ValidationError('Member must have `Role` of Team Member ')
+            except User.DoesNotExist:
+                raise ValidationError('Member doesn\'t exist')
+        return value
 
     class Meta:
         model = Team

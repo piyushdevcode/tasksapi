@@ -38,8 +38,7 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     queryset = Task.objects.all()
     serializer_class = serializers.TaskSerializer
-    
-    #/ TRANSFER  send mail TO perform create
+     
     def perform_create(self, serializer):
         """
         when new task is created send mail to their corresponding leader
@@ -48,12 +47,11 @@ class TaskViewSet(viewsets.ModelViewSet):
         leader    = serializer.validated_data["team"].team_leader
         message   = f'Hello {leader.username},\n\nNew Task "{task_name}" is assigned to your team'
         subject   = f'New Task {task_name} Assigned'
-
         send_mail_to_leader.delay(subject =subject,
                                   to_email=leader.email,
                                   message=message,
                                   onsuccess='Task Creation mail sent successfully')
-        raise Exception
+        # raise Exception
         serializer.save()
     
     # Only Team Leader can update all the fields of Task using PUT method

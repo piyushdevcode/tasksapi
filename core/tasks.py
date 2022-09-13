@@ -4,7 +4,7 @@ from django.conf import settings
 
 # shared task 
 
-@shared_task(bind=True)
+@shared_task(bind=True,name='send_mail_to_leader')
 def send_mail_to_leader(self,**kwargs):
     """
     send email to leader by specifying the message and subject 
@@ -13,10 +13,10 @@ def send_mail_to_leader(self,**kwargs):
     message = kwargs['message']
     recepient_list = kwargs['to_email']
     print(f'self is {self} \n kwargs: {kwargs}')
-    # send_mail(subject=subject,
-    #           message=message,
-    #           from_email=settings.EMAIL_HOST_USER,
-    #           recipient_list=[recepient_list],
-    #           fail_silently=False,
-    #             )
+    send_mail(subject=subject,
+              message=message,
+              from_email=settings.EMAIL_HOST_USER,
+              recipient_list=[recepient_list],
+              fail_silently=True,
+                )
     return kwargs['onsuccess']

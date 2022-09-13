@@ -1,0 +1,246 @@
+[
+{
+    "model": "taskapi.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$U2JSQR1fmosCFrTTQEJfq1$t4KWmIOii8y4CYFeHmqcQBhEOeFKcgezmykN2gx+14s=",
+        "last_login": "2022-09-09T06:35:50.353Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2022-09-01T12:52:44.286Z",
+        "role": "Team Member",
+        "email": "admin@gmail.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "taskapi.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$kCe8z3P8yLVN3tizP4Dcsg$WUKbeEfoJj/U5IsClBJymxjUUTG+4i+LzQBGAsLgoNY=",
+        "last_login": "2022-09-02T06:04:08.308Z",
+        "is_superuser": false,
+        "username": "user1",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-09-01T13:53:51.871Z",
+        "role": "User",
+        "email": "user1@a.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "taskapi.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$GUk5TFiUKWvirBHEEt4N3w$IC3HyMKpnfQ/VJ0PBt17n0/0+9GHLYti62Y0oyN9YiQ=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user2",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-09-01T14:05:37.473Z",
+        "role": "User",
+        "email": "user2@a.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "taskapi.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$xstE8D1JcS3RPlymLwhBjN$zNP+HRYXpnPq1BPP2rJLBELdgegQ6GAyWlefVASuKOo=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "leader1",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-09-01T14:05:57.409Z",
+        "role": "Team Leader",
+        "email": "piyushdevcode@gmail.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "taskapi.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$Xy581CtR2RpO1gCsr3U9aX$rTAs5DKt4D+tlQyKJXz1ZAOOhOIzGMkCt773qNQKxpM=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "member1",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-09-01T14:10:20.387Z",
+        "role": "Team Member",
+        "email": "mem@g.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "taskapi.user",
+    "pk": 6,
+    "fields": {
+        "password": "123",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user3",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-09-01T17:19:19.181Z",
+        "role": "User",
+        "email": "piyush@a.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "taskapi.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$odFO2RlCDbvPJqM6LHKMJc$z5/i1BTY7P/a6UClT+YQnSmAeokfpldIH0wWsQYli14=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "leader3",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-09-01T17:34:28.354Z",
+        "role": "Team Leader",
+        "email": "some@s.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "taskapi.user",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$2wjzw2AX3kslw6vw8VkR0y$blY1VrwiAvzzF1iNlkbl0zel285rw+Xgwf89wGq+R3M=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "leader2",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-09-02T14:54:59.968Z",
+        "role": "Team Leader",
+        "email": "tL@a.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "taskapi.user",
+    "pk": 9,
+    "fields": {
+        "password": "pbkdf2_sha256$320000$IfXjpaFczQIRUiHij3hb0s$tG0zYFDZCCo+5ua4f14vX1mpnt1ejeujwqqfO5lOEmw=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "member2",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-09-13T06:17:20.734Z",
+        "role": "Team Member",
+        "email": "member2@gmail.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "taskapi.user",
+    "pk": 10,
+    "fields": {
+        "password": "pbkdf2_sha256$320000$EvFImPpPyeGlyAADn0kOuD$r1VZGlBDfN6n/XAcHd0m5Y6o8hvq4fMGv+bH/YyLSJY=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "member3",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-09-13T06:17:59.329Z",
+        "role": "Team Member",
+        "email": "member3@gmail.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "taskapi.team",
+    "pk": 1,
+    "fields": {
+        "name": "Team 1",
+        "team_leader": 4,
+        "team_members": [
+            5,
+            9
+        ]
+    }
+},
+{
+    "model": "taskapi.team",
+    "pk": 2,
+    "fields": {
+        "name": "Team 2",
+        "team_leader": 8,
+        "team_members": [
+            5,
+            10
+        ]
+    }
+},
+{
+    "model": "taskapi.task",
+    "pk": 1,
+    "fields": {
+        "team": 1,
+        "name": "Fix UI",
+        "status": "Assigned",
+        "started_at": "2022-09-13",
+        "completed_at": null,
+        "team_members": [
+            5,
+            9
+        ]
+    }
+},
+{
+    "model": "taskapi.task",
+    "pk": 2,
+    "fields": {
+        "team": 2,
+        "name": "Update theme",
+        "status": "Assigned",
+        "started_at": "2022-09-13",
+        "completed_at": null,
+        "team_members": [
+            5,
+            10
+        ]
+    }
+}
+]

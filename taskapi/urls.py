@@ -3,7 +3,8 @@ from taskapi import views
 from rest_framework import routers
 from rest_framework.authtoken import views as restviews
 
-router = routers.DefaultRouter()
+
+# router = routers.DefaultRouter()
 
 # router.register(r'tasks',views.TaskViewSet)
 
