@@ -37,15 +37,6 @@ class TaskAdmin(admin.ModelAdmin):
     list_display = ('name','team','started_at','status','completed_at')
     list_filter = ('status','team')
     
-    #/ FOR TESTING -------------
-    def save_model(self, request, obj, form, change):
-        print('Saving the Task from Admin Panel: ', obj)
-        print('Team is:  ', obj.team)
-        for member in obj.team.team_members.all():
-            print("Member: ",member)
-        # obj.save()
-        super().save_model(request,obj,form,change)
-
     # dynamically changing which fields are displyed on add or change form 
     def get_fields(self, request, obj):
         if obj :

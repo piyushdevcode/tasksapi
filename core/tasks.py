@@ -12,7 +12,6 @@ def send_mail_to_leader(self,**kwargs):
     subject = kwargs['subject']
     message = kwargs['message']
     recepient_list = kwargs['to_email']
-    print(f'self is {self} \n kwargs: {kwargs}')
     send_mail(subject=subject,
               message=message,
               from_email=settings.EMAIL_HOST_USER,
