@@ -48,7 +48,7 @@ class TestTeamCreate(TestSetUp):
         }
 
     # only USER Role can create Team
-    def test_create_team_by_non_user(self):
+    def test_create_team_by_non_USER(self):
         self.client.force_authenticate(user=self.leader2)
         response = self.client.post(reverse('team-list'),self.new_team_data)
         self.assertEqual(response.status_code,status.HTTP_403_FORBIDDEN)
