@@ -18,10 +18,10 @@
 |`teams/`| GET | retrieve a team info| Authenticated User |
 |`tasks/`| POST | create a new task | USER or Admin |
 |`tasks/`| GET | list all the tasks | USER or Admin |
-|`tasks/<int:pk>`| POST | retrieve a task info | Member of Task |
-|`tasks/<int:pk>`| GET | retrieve a task info | Member of Task |
-|`tasks/<int:pk>`| PUT | Update task info(all fields) | Team Leader |
-|`tasks/<int:pk>`| PATCH | Update task info(only status field) | Team Member or Team Leader |
+|`tasks/<int:pk>/`| POST | retrieve a task info | Member of Task |
+|`tasks/<int:pk>/`| GET | retrieve a task info | Member of Task |
+|`tasks/<int:pk/>`| PUT | Update task info(all fields) | Team Leader |
+|`tasks/<int:pk/>`| PATCH | Update task info(only status field) | Team Member or Team Leader |
 
 
  
